@@ -1,0 +1,107 @@
+app.py
+
+import base64
+import requests
+
+
+# 🔐 SUA API KEY
+
+
+API_KEY = "SUA_API_KEY_AQUI"
+
+
+
+# 🌐 ENDPOINTS
+
+
+OCR_URL = "https://vision.googleapis.com/v1/images:annotate?key=" + API_KEY
+TTS_URL = "https://texttospeech.googleapis.com/v1/text:synthesize?key=" + API_KEY
+
+
+
+# 🧠 OCR (imagem → texto)
+
+
+
+def google_ocr(file):
+    image_base64 = base64.b64encode(file.read()).decode("utf-8")
+
+    body = {
+        "requests": [
+            {
+                "image": {"content": image_base64},
+                "features": [{"type": "TEXT_DETECTION"}]
+            }
+        ]
+    }
+
+    response = requests.post(OCR_URL, json=body)
+    result = response.json()
+
+    return result["responses"][0].get("fullTextAnnotation", {}).get("text", "")
+
+
+
+# 🔊 TTS (texto → áudio base64)
+
+
+
+def google_tts(texto):
+    body = {
+        "input": {"text": texto},
+        "voice": {
+            "languageCode": "pt-BR",
+            "name": "pt-BR-Wavenet-A"
+        },
+        "audioConfig": {
+            "audioEncoding": "MP3"
+        }
+    }
+
+    response = requests.post(TTS_URL, json=body)
+    result = response.json()
+
+    return result.get("audioContent", "")
+
+
+
+
+# 🔁 PIPELINE COMPLETO (OCR + TTS)
+
+
+
+def processar_imagem(file):
+    texto = google_ocr(file)      # 🧠 imagem → texto
+    audio = google_tts(texto)     # 🔊 texto → áudio
+
+    return {
+        "text": texto,
+        "audio": audio
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+EM OUTRA ABA
+
+
+
+
+
+
+
+resultado = processar_imagem(file)
+
+texto = resultado["text"]
+audio = resultado["audio"]

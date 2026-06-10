@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link rel="icon" type="image/png" href="favicon.png">
+
+<title>LEXI</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#f7f7ef;
+min-height:100vh;
+display:flex;
+flex-direction:column;
+}
+
+header{
+height:90px;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(90deg,#240046,#5a189a,#ff6d00);
+}
+
+header h1{
+color:white;
+font-size:42px;
+font-weight:bold;
+}
+
+main{
+padding:20px;
+flex:1;
+}
+
+.topo{
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:20px;
+}
+
+.foto-box{
+width:220px;
+height:220px;
+background:white;
+border-radius:20px;
+display:flex;
+justify-content:center;
+align-items:center;
+overflow:hidden;
+box-shadow:0 4px 10px rgba(0,0,0,.15);
+}
+
+#cameraBtn{
+background:#3c096c;
+color:white;
+border:none;
+border-radius:18px;
+width:280px;
+min-height:90px;
+padding:20px;
+display:flex;
+justify-content:center;
+align-items:center;
+text-align:center;
+font-size:18px;
+line-height:1.4;
+}
+
+.transcricao{
+margin-top:30px;
+background:white;
+border-radius:25px;
+min-height:220px;
+padding:25px;
+box-shadow:0 4px 10px rgba(0,0,0,.15);
+font-size:20px;
+}
+
+footer{
+height:120px;
+background:linear-gradient(90deg,#240046,#5a189a,#ff6d00);
+display:flex;
+justify-content:center;
+align-items:center;
+position:relative;
+}
+
+.velocidade{
+position:absolute;
+right:20px;
+top:15px;
+}
+
+#speedControl{
+background:black;
+color:white;
+border:none;
+padding:8px 14px;
+border-radius:20px;
+}
+
+.controles{
+display:flex;
+gap:20px;
+}
+
+.controles button{
+width:60px;
+height:60px;
+border-radius:50%;
+border:none;
+font-size:28px;
+background:white;
+}
+
+.pause{
+width:75px !important;
+height:75px !important;
+background:#5a189a !important;
+color:white;
+border:4px solid white !important;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>LEXI</h1>
+</header>
+
+<main>
+
+<section class="topo">
+
+<div class="foto-box">
+<span id="placeholderFoto">Foto da página</span>
+
+<img
+id="previewImagem"
+style="display:none;width:100%;height:100%;object-fit:cover;"
+> 
+</div>
+
+<button id="cameraBtn">
+📷 Tirar uma foto<br>
+ou escolher um arquivo
+</button>
+
+<input
+id="cameraInput"
+type="file"
+accept="image/*,.pdf"
+hidden
+>
+
+</section>
+
+<section class="transcricao">
+<div id="textoLeitura">
+A transcrição aparecerá aqui após enviar a imagem.
+</div>
+</section>
+
+</main>
+
+<footer>
+
+<div class="velocidade">
+<select id="speedControl">
+<option value="0.5">0,5x</option>
+<option value="1" selected>1,0x</option>
+<option value="1.5">1,5x</option>
+<option value="2">2,0x</option>
+</select>
+</div>
+
+<div class="controles">
+<button onclick="voltarTexto()">←</button>
+
+<button
+class="pause"
+id="playPauseBtn"
+onclick="controlarLeitura()"
+> 
+▶️
+</button>
+
+<button onclick="avancarTexto()">→</button>
+</div>
+
+</footer>
+
+<script src="config.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
